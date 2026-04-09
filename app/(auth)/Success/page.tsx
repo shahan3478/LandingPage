@@ -12,7 +12,7 @@ export default function SuccessPage() {
     return (
         <div className={`${poppins.className} flex flex-col items-center w-full max-w-[500px]`}>
             {/* Top Navigation */}
-            <Link href="/sign-in" className="text-gray-500 mb-6 flex items-center gap-2 hover:text-slate-900 transition-colors text-sm font-medium">
+            <Link href="/Signin" className="text-gray-500 mb-6 flex items-center gap-2 hover:text-slate-900 transition-colors text-sm font-medium">
                 <ArrowLeft className="w-4 h-4" /> Back to Login
             </Link>
 

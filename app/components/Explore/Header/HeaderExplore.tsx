@@ -41,9 +41,9 @@ export default function Header() {
                 </Link>
 
                 {/* --- DESKTOP ONLY: Login Button (Right) --- */}
-                <button className="hidden md:block bg-white text-black px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-all duration-200 ease-in-out active:scale-95">
+                <Link href="/Signin" className="hidden md:block bg-white text-black px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-all duration-200 ease-in-out active:scale-95">
                     Login
-                </button>
+                </Link>
 
                 {/* --- MOBILE ONLY: User Profile Icon (Right) --- */}
                 <button className="md:hidden bg-white text-black p-[6px] rounded-md hover:bg-gray-200 transition-colors">
@@ -67,7 +67,7 @@ export default function Header() {
 
                 {/* Current Page */}
                 <Link
-                    href="/"
+                    href="/ShopPage"
                     className="flex items-center gap-2 text-[#565656] text-lg hover:text-black transition-colors"
                 >
                     {/* Home Icon using lucide-react */}

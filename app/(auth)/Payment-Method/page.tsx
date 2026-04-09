@@ -95,7 +95,7 @@ export default function PaymentMethodPage() {
                 <div className="grid grid-cols-2 gap-4">
                     {/* Back Button */}
                     <Link
-                        href="/register"
+                        href="/Subscribe"
                         className="flex items-center justify-center py-2 rounded-lg border border-gray-200 bg-[#F8F9FA] text-slate-900 font-medium hover:bg-gray-100 transition-colors"
                     >
                         Back

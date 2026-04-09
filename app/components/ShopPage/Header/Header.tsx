@@ -34,18 +34,18 @@ export default function HeaderComponent() {
                         </Link>
 
                         {/* Shop Now Link */}
-                        <Link href="/shop" className="hidden md:block text-sm font-medium text-white hover:text-gray-300 transition-colors">
+                        <Link href="/ShopPage" className="hidden md:block text-sm font-medium text-white hover:text-gray-300 transition-colors">
                             Shop Now
                         </Link>
                     </div>
 
                     {/* Right Section: Sign In + Sign Up */}
                     <div className="flex items-center gap-6">
-                        <Link href="/signin" className="hidden sm:block text-sm font-medium text-white hover:text-gray-300 transition-colors">
+                        <Link href="/Signin" className="hidden sm:block text-sm font-medium text-white hover:text-gray-300 transition-colors">
                             Sign In
                         </Link>
 
-                        <Link href="/signup" className="bg-white text-black text-sm font-semibold py-2 md:py-2.5 px-4 md:px-5 rounded-full flex items-center gap-2 hover:bg-gray-100 transition-colors">
+                        <Link href="/Subscribe" className="bg-white text-black text-sm font-semibold py-2 md:py-2.5 px-4 md:px-5 rounded-full flex items-center gap-2 hover:bg-gray-100 transition-colors">
                             <User size={18} />
                             Sign Up
                         </Link>
@@ -63,7 +63,7 @@ export default function HeaderComponent() {
                         <Home size={16} className="text-gray-400" />
                         <Link href="/" className="hover:text-black transition-colors">Home</Link>
                         <ChevronRight size={16} className="text-gray-300" />
-                        <span className="text-zinc-900 font-medium">Explore Collection</span>
+                        <Link href="/ExplorePage" className="text-zinc-900 font-medium">Explore Collection</Link>
                     </div>
 
                     {/* Page Heading  */}
