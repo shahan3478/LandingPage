@@ -1,4 +1,4 @@
-// app/(auth)/payment/page.tsx
+// app/(auth)/payment/SideBar.tsx
 "use client";
 
 import { useState } from 'react';

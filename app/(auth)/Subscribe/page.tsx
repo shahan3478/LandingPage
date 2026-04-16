@@ -1,7 +1,9 @@
-// app/(auth)/register/page.tsx
+// app/(auth)/register/SideBar.tsx
+"use client"
 import Link from 'next/link';
 import { Check, CreditCard } from 'lucide-react';
 import { Poppins } from 'next/font/google';
+import { useState } from 'react';
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -9,6 +11,88 @@ const poppins = Poppins({
 });
 
 export default function RegisterPage() {
+    // 1. State for all form fields
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirmPassword: ''
+    });
+
+    // 2. State for specific field errors
+    const [errors, setErrors] = useState({
+        fullName: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirmPassword: ''
+    });
+
+    // 3. Handle input changes and clear specific errors
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+
+        if (errors[name as keyof typeof errors]) {
+            setErrors(prev => ({ ...prev, [name]: '' }));
+        }
+    };
+
+    // 4. Validation function
+    const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        let newErrors = { fullName: '', email: '', phone: '', password: '', confirmPassword: '' };
+        let isValid = true;
+
+        // Full Name Validation
+        if (!formData.fullName.trim()) {
+            newErrors.fullName = "Full Name is required";
+            isValid = false;
+        }
+
+        // Email Validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!formData.email.trim()) {
+            newErrors.email = "Email is required";
+            isValid = false;
+        } else if (!emailRegex.test(formData.email)) {
+            newErrors.email = "Please enter a valid email format";
+            isValid = false;
+        }
+
+        // Phone Validation (Allows optional +, digits, spaces, and dashes)
+        const phoneRegex = /^\+?[0-9\s\-]{7,15}$/;
+        if (!formData.phone.trim()) {
+            newErrors.phone = "Phone Number is required";
+            isValid = false;
+        } else if (!phoneRegex.test(formData.phone)) {
+            newErrors.phone = "Please enter a valid phone number format";
+            isValid = false;
+        }
+
+        // Password Validation
+        if (!formData.password.trim()) {
+            newErrors.password = "Password is required";
+            isValid = false;
+        }
+
+        // Confirm Password Validation
+        if (!formData.confirmPassword.trim()) {
+            newErrors.confirmPassword = "Confirm Password is required";
+            isValid = false;
+        } else if (formData.password !== formData.confirmPassword) {
+            newErrors.confirmPassword = "Passwords do not match";
+            isValid = false;
+        }
+
+        // Stop navigation and set errors if not valid
+        if (!isValid) {
+            e.preventDefault();
+            setErrors(newErrors);
+            return;
+        }
+    };
+
     return (
         <div className={`${poppins.className} flex flex-col items-center w-full max-w-[650px]`}>
 
@@ -49,9 +133,17 @@ export default function RegisterPage() {
                             <label className="block text-sm font-medium mb-1.5 text-slate-900">Full Name *</label>
                             <input
                                 type="text"
+                                name="fullName"
+                                value={formData.fullName}
+                                onChange={handleChange}
                                 placeholder="Enter your full name"
-                                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none transition-all"
+                                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 outline-none transition-all ${
+                                    errors.fullName
+                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+                                        : 'border-gray-200 focus:ring-slate-900 focus:border-slate-900'
+                                }`}
                             />
+                            {errors.fullName && <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.fullName}</p>}
                         </div>
 
                         {/* Email Address */}
@@ -59,9 +151,17 @@ export default function RegisterPage() {
                             <label className="block text-sm font-medium mb-1.5 text-slate-900">Email Address *</label>
                             <input
                                 type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
                                 placeholder="Enter your email address"
-                                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none transition-all"
+                                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 outline-none transition-all ${
+                                    errors.email
+                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+                                        : 'border-gray-200 focus:ring-slate-900 focus:border-slate-900'
+                                }`}
                             />
+                            {errors.email && <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.email}</p>}
                         </div>
 
                         {/* Phone Number */}
@@ -69,9 +169,17 @@ export default function RegisterPage() {
                             <label className="block text-sm font-medium mb-1.5 text-slate-900">Phone Number</label>
                             <input
                                 type="tel"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
                                 placeholder="+92 300 1234567"
-                                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none transition-all placeholder:text-gray-300"
+                                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 outline-none transition-all placeholder:text-gray-300 ${
+                                    errors.phone
+                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+                                        : 'border-gray-200 focus:ring-slate-900 focus:border-slate-900'
+                                }`}
                             />
+                            {errors.phone && <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.phone}</p>}
                         </div>
 
                         {/* Password */}
@@ -79,9 +187,17 @@ export default function RegisterPage() {
                             <label className="block text-sm font-medium mb-1.5 text-slate-900">Password</label>
                             <input
                                 type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
                                 placeholder="Enter Password"
-                                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none transition-all"
+                                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 outline-none transition-all ${
+                                    errors.password
+                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+                                        : 'border-gray-200 focus:ring-slate-900 focus:border-slate-900'
+                                }`}
                             />
+                            {errors.password && <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.password}</p>}
                         </div>
 
                         {/* Confirm Password */}
@@ -89,15 +205,23 @@ export default function RegisterPage() {
                             <label className="block text-sm font-medium mb-1.5 text-slate-900">Confirm Password</label>
                             <input
                                 type="password"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
                                 placeholder="Enter Confirm Password"
-                                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none transition-all"
+                                className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 outline-none transition-all ${
+                                    errors.confirmPassword
+                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+                                        : 'border-gray-200 focus:ring-slate-900 focus:border-slate-900'
+                                }`}
                             />
+                            {errors.confirmPassword && <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.confirmPassword}</p>}
                         </div>
                     </div>
 
 
                     {/* Features Section */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 mt-5">
                         {/* Column 1 */}
                         <div>
                             <h3 className="font-bold text-slate-900 mb-3">Instant Access</h3>
@@ -134,7 +258,11 @@ export default function RegisterPage() {
                     </div>
 
                     {/* Submit Button */}
-                    <Link href="/Payment-Method" className="w-full flex items-center justify-center gap-2 bg-[#0B0F19] text-[#C6CB3B] py-2 rounded-lg font-semibold hover:bg-slate-800 transition-colors mt-4">
+                    <Link
+                        href="/Payment-Method"
+                        onClick={handleNavigation}
+                        className="w-full flex items-center justify-center gap-2 bg-[#0B0F19] text-[#C6CB3B] py-2 rounded-lg font-semibold hover:bg-slate-800 transition-colors mt-4"
+                    >
                         <CreditCard className="w-5 h-5 text-[#C6CB3B]" />
                         Continue to Payment - 1 AED
                     </Link>

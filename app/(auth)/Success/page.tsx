@@ -1,4 +1,4 @@
-// app/(auth)/success/page.tsx
+// app/(auth)/success/SideBar.tsx
 import Link from 'next/link';
 import { ArrowLeft, X, Check } from 'lucide-react';
 import { Poppins } from 'next/font/google';
@@ -54,7 +54,7 @@ export default function SuccessPage() {
 
 
                 <Link
-                    href="/dashboard"
+                    href="/CustomerDashboard"
                     className="w-full flex justify-center bg-[#0B0F19] text-[#C6CB3B] py-2 rounded-lg font-medium hover:bg-slate-800 transition-colors"
                 >
                     Go to Dashboard

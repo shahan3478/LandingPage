@@ -1,4 +1,4 @@
-// app/(auth)/forgot-password/page.tsx
+// app/(auth)/forgot-password/SideBar.tsx
 import Link from 'next/link';
 import { Mail, ArrowLeft } from 'lucide-react';
 import { Poppins } from 'next/font/google';

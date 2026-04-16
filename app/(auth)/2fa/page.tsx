@@ -1,4 +1,4 @@
-// app/(auth)/2fa/page.tsx
+// app/(auth)/2fa/SideBar.tsx
 "use client"; // This is required for interactivity (useState, useRef, onClick, etc.)
 
 import { useState, useRef } from 'react';

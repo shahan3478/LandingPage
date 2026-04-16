@@ -1,4 +1,4 @@
-// app/(auth)/reset-success/page.tsx
+// app/(auth)/reset-success/SideBar.tsx
 import Link from 'next/link';
 import { ArrowLeft, Check, Clock } from 'lucide-react';
 import { Poppins } from 'next/font/google';

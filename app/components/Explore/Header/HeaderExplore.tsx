@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Home, Menu, User } from 'lucide-react'; // Added Menu and User icons
 
 export default function Header() {
-    // This function tells the sidebar to open without needing shared state in page.tsx
+    // This function tells the sidebar to open without needing shared state in SideBar.tsx
     const openMobileMenu = () => {
         if (typeof window !== 'undefined') {
             window.dispatchEvent(new CustomEvent('open-filter-sidebar'));

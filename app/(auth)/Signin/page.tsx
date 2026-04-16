@@ -1,7 +1,9 @@
-// app/(auth)/sign-in/page.tsx
+// app/(auth)/sign-in/SideBar.tsx
+"use client"
 import Link from 'next/link';
 import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import { Poppins } from 'next/font/google';
+import {useState} from 'react';
 
 // Initialize the font
 const poppins = Poppins({
@@ -10,6 +12,32 @@ const poppins = Poppins({
 });
 
 export default function SignInPage() {
+const [email,setemail]=useState("");
+    const [error,setError]=useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [password, setPassword] = useState("");
+    const handlenavigation=(e:React.MouseEvent<HTMLAnchorElement>)=>{
+        if(!email.trim()){
+            e.preventDefault();
+            setError("Email is required")
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailRegex.test(email)){
+            e.preventDefault();
+            setError("Please enter a valid email format")
+            return;
+        }
+        if (!password.trim()) {
+            e.preventDefault();
+            setPasswordError("Password is required");
+            return;
+        }
+
+    }
+
+
+
     return (
         <div className={`${poppins.className} flex flex-col items-center w-full max-w-[500px]`}>
             {/* Top Navigation */}
@@ -36,10 +64,19 @@ export default function SignInPage() {
                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                             <input
                                 type="email"
+                                value={email}
+                                onChange={(e)=>{setemail(e.target.value)
+                                setError("")}}
                                 placeholder="your@email.com"
-                                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none transition-all"
-                            />
+                                className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:outline-none transition-all ${
+                                    error
+                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+                                        : 'border-gray-200 focus:ring-slate-900 focus:border-slate-900'
+                                }`}                            />
                         </div>
+                        {error && (
+                            <p className="text-red-500 text-xs mt-1.5 font-medium">{error}</p>
+                        )}
                     </div>
 
                     {/* Password Field */}
@@ -49,13 +86,26 @@ export default function SignInPage() {
                             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                             <input
                                 type="password"
+                                value={password}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                    setPasswordError(""); // Clear error when user types
+                                }}
                                 placeholder="••••••••"
-                                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none transition-all"
+                                className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:outline-none transition-all ${
+                                    passwordError
+                                        ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+                                        : 'border-gray-200 focus:ring-slate-900 focus:border-slate-900'
+                                }`}
                             />
                         </div>
+                        {/* 3. Display password error message */}
+                        {passwordError && (
+                            <p className="text-red-500 text-xs mt-1.5 font-medium">{passwordError}</p>
+                        )}
                     </div>
 
-                    <Link href='/2fa' className="block w-full text-center bg-[#0B0F19] text-[#C6CB3B] py-2 rounded-lg font-medium hover:bg-slate-800 transition-colors mt-2">
+                    <Link href='/2fa' onClick={handlenavigation} className="block w-full text-center bg-[#0B0F19] text-[#C6CB3B] py-2 rounded-lg font-medium hover:bg-slate-800 transition-colors mt-2">
                         Sign In
                     </Link>
                 </form>
